@@ -4,12 +4,21 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
+  Alert,
 } from "react-native";
-import React from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "expo-router";
 
 const SignUp = () => {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const submit = () => {
+    Alert.alert(
+      `Welcome, ${email}! Confirmation phone number has been sent to ${password}`
+    );
+  };
   return (
     <View style={[styles.container]}>
       <View style={styles.input}>
@@ -17,15 +26,22 @@ const SignUp = () => {
       </View>
 
       <View style={styles.input}>
-        <TextInput placeholder="Email" style={styles.emailInput} />
+        <TextInput
+          placeholder="Email"
+          style={styles.emailInput}
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        />
         <TextInput
           placeholder="Password"
           secureTextEntry
           style={styles.emailInput}
+          value={password}
+          onChangeText={(text) => setPassword(text)}
         />
-        <TextInput
-          placeholder="Phone No."
-          style={styles.emailInput}
+        <TextInput placeholder="Phone No." style={styles.emailInput} 
+        value={phone}
+        onChangeText={(text) => setPhone(text)}
         />
       </View>
 
@@ -40,7 +56,7 @@ const SignUp = () => {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={() => submit()}>
         <Text style={styles.buttonColor}>Create an Account</Text>
       </TouchableOpacity>
     </View>

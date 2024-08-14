@@ -1,22 +1,23 @@
 import { useNavigation } from "expo-router";
-import React, {useState} from "react";
+import React, { useState,useRef } from "react";
 import {
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  Alert
+  Alert,
 } from "react-native";
 
 export default function Page() {
   const navigation = useNavigation();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const emailInput = useRef(null);
+
   const submit = () => {
     Alert.alert(
-      `Welcome, ${email}! Confirmation phone number has been sent to ${password}`,
+      `Welcome, ${email}! Confirmation phone number has been sent to ${password}`
     );
   };
 
@@ -27,16 +28,27 @@ export default function Page() {
       </View>
 
       <View style={styles.input}>
-        <TextInput placeholder="Email" style={styles.emailInput} />
+        <TextInput
+          placeholder="Email"
+          style={styles.emailInput}
+          value={email}
+          returnKeyType="next"
+          onChangeText={(text) => setEmail(text)}
+          onSubmitEditing={() => emailInput.current.focus()}
+        />
         <TextInput
           placeholder="Password"
           secureTextEntry
           style={styles.emailInput}
+          value={password}
+          onSubmitEditing={submit}
+          returnKeyType="send"
+          onChangeText={(text) => setPassword(text)}
         />
       </View>
 
       <View style={styles.space}>
-        <Text>Don't have an account{' '}</Text>
+        <Text>Don't have an account </Text>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("SignUp");
@@ -46,7 +58,7 @@ export default function Page() {
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={styles.button} onPress={()=>submit()}>
+      <TouchableOpacity style={styles.button} onPress={() => submit()}>
         <Text style={styles.buttonColor}>Sign in</Text>
       </TouchableOpacity>
     </View>
@@ -75,12 +87,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
-  space:{
-    marginTop:15,
-    flexDirection:'row'
+  space: {
+    marginTop: 15,
+    flexDirection: "row",
   },
-  text2:{
-    fontWeight:'bold',
+  text2: {
+    fontWeight: "bold",
   },
   button: {
     backgroundColor: "rgb(19, 102, 159)",
